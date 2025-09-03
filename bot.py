@@ -49,8 +49,8 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 ADMIN_IDS = {int(id_) for id_ in os.getenv('ADMIN_IDS', '1210291131301101618').split(',') if id_.strip()}
 ADMIN_ROLE_ID = int(os.getenv('ADMIN_ROLE_ID', '1376177459870961694'))
-WATERMARK = "UnixNodes VPS Service"
-WELCOME_MESSAGE = "Welcome To UnixNodes! Get Started With Us!"
+WATERMARK = "DarkNodes VPS Service"
+WELCOME_MESSAGE = "Welcome To DarkNodes! Get Started With Us!"
 MAX_VPS_PER_USER = int(os.getenv('MAX_VPS_PER_USER', '3'))
 DEFAULT_OS_IMAGE = os.getenv('DEFAULT_OS_IMAGE', 'ubuntu:22.04')
 DOCKER_NETWORK = os.getenv('DOCKER_NETWORK', 'bridge')
@@ -438,13 +438,13 @@ class UnixNodesBot(commands.Bot):
                         
                         for pattern in MINER_PATTERNS:
                             if pattern in output:
-                                logger.warning(f"Mining detected in VPS {vps['vps_id']}, suspending...")
-                                container.stop()
-                                self.db.update_vps(token, {'status': 'suspended'})
+                          #      logger.warning(f"Mining detected in VPS {vps['vps_id']}, suspending...")
+                          #      container.stop()
+                           #     self.db.update_vps(token, {'status': 'suspended'})
                                 # Notify owner
-                                try:
-                                    owner = await self.fetch_user(int(vps['created_by']))
-                                    await owner.send(f"⚠️ Your VPS {vps['vps_id']} has been suspended due to detected mining activity. Contact admin to unsuspend.")
+                            #    try:
+                            #        owner = await self.fetch_user(int(vps['created_by']))
+                                 #   await owner.send(f"⚠️ Your VPS {vps['vps_id']} has been suspended due to detected mining activity. Contact admin to unsuspend.")
                                 except:
                                     pass
                                 break
@@ -2653,4 +2653,5 @@ if __name__ == "__main__":
         bot.run(TOKEN)
     except Exception as e:
         logger.error(f"Bot crashed: {e}")
+
         traceback.print_exc()
