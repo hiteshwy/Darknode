@@ -418,42 +418,7 @@ class UnixNodesBot(commands.Bot):
         """Restore persistent views after restart"""
         # This would be implemented to restore any persistent UI components
         pass
-
-    async def anti_miner_monitor(self):
-        """Periodically check for mining activities"""
-        await self.wait_until_ready()
-        while not self.is_closed():
-            try:
-                for token, vps in self.db.get_all_vps().items():
-                    if vps['status'] != 'running':
-                        continue
-                    try:
-                        container = self.docker_client.containers.get(vps['container_id'])
-                        if container.status != 'running':
-                            continue
-                        
-                        # Check processes
-                        exec_result = container.exec_run("ps aux")
-                        output = exec_result.output.decode().lower()
-                        
-                        for pattern in MINER_PATTERNS:
-                            if pattern in output:
-                          #      logger.warning(f"Mining detected in VPS {vps['vps_id']}, suspending...")
-                          #      container.stop()
-                           #     self.db.update_vps(token, {'status': 'suspended'})
-                                # Notify owner
-                            #    try:
-                            #        owner = await self.fetch_user(int(vps['created_by']))
-                                 #   await owner.send(f"⚠️ Your VPS {vps['vps_id']} has been suspended due to detected mining activity. Contact admin to unsuspend.")
-                                except:
-                                    pass
-                                break
-                    except Exception as e:
-                        logger.error(f"Error checking VPS {vps['vps_id']} for mining: {e}")
-            except Exception as e:
-                logger.error(f"Error in anti_miner_monitor: {e}")
-            await asyncio.sleep(300)  # Check every 5 minutes
-
+        
     async def update_system_stats(self):
         """Update system statistics periodically"""
         await self.wait_until_ready()
@@ -2655,3 +2620,4 @@ if __name__ == "__main__":
         logger.error(f"Bot crashed: {e}")
 
         traceback.print_exc()
+
