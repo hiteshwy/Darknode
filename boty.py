@@ -419,7 +419,7 @@ class UnixNodesBot(commands.Bot):
         # This would be implemented to restore any persistent UI components
         pass
 
-    async def anti_miner_monitor(self):
+  #  async def anti_miner_monitor(self):
         """Periodically check for mining activities"""
         await self.wait_until_ready()
         while not self.is_closed():
@@ -2654,4 +2654,5 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"Bot crashed: {e}")
         traceback.print_exc()ashed: {e}")
+
         traceback.print_exc()
